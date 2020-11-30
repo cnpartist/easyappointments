@@ -1,3 +1,5 @@
+<p>Fork for special usecase. Rest of README from original.</p>
+
 <h1 align="center">
     <br>
     <a href="https://easyappointments.org">
