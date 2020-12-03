@@ -106,7 +106,7 @@ window.FrontendBook = window.FrontendBook || {};
 
         $('#select-date').datepicker({
             dateFormat: 'dd-mm-yy',
-            firstDay: 0,
+            firstDay: 1,
             minDate: 0,
             defaultDate: Date.today(),
 
@@ -197,11 +197,11 @@ window.FrontendBook = window.FrontendBook || {};
          *
          * Whenever the provider changes the available appointment date - time periods must be updated.
          */
-        $('#select-provider').change(function () {
-            FrontendBookApi.getUnavailableDates($(this).val(), $('#select-service').val(),
-                $('#select-date').datepicker('getDate').toString('yyyy-MM-dd'));
-            FrontendBook.updateConfirmFrame();
-        });
+        // $('#select-provider').change(function () {
+        //     FrontendBookApi.getUnavailableDates($(this).val(), $('#select-service').val(),
+        //         $('#select-date').datepicker('getDate').toString('yyyy-MM-dd'));
+        //     FrontendBook.updateConfirmFrame();
+        // });
 
         /**
          * Event: Selected Service "Changed"
@@ -213,25 +213,25 @@ window.FrontendBook = window.FrontendBook || {};
             var currServiceId = $('#select-service').val();
             $('#select-provider').empty();
 
-            $.each(GlobalVariables.availableProviders, function (indexProvider, provider) {
-                $.each(provider.services, function (indexService, serviceId) {
-                    // If the current provider is able to provide the selected service,
-                    // add him to the listbox.
-                    if (serviceId == currServiceId) {
-                        var optionHtml = '<option value="' + provider.id + '">'
-                            + provider.first_name + ' ' + provider.last_name
-                            + '</option>';
-                        $('#select-provider').append(optionHtml);
-                    }
-                });
-            });
+            // $.each(GlobalVariables.availableProviders, function (indexProvider, provider) {
+            //     $.each(provider.services, function (indexService, serviceId) {
+            //         // If the current provider is able to provide the selected service,
+            //         // add him to the listbox.
+            //         if (serviceId == currServiceId) {
+            //             var optionHtml = '<option value="' + provider.id + '">'
+            //                 + provider.first_name + ' ' + provider.last_name
+            //                 + '</option>';
+            //             $('#select-provider').append(optionHtml);
+            //         }
+            //     });
+            // });
 
             // Add the "Any Provider" entry.
-            if ($('#select-provider option').length >= 1) {
+            // if ($('#select-provider option').length >= 1) {
                 $('#select-provider').append(new Option('- ' + EALang.any_provider + ' -', 'any-provider'));
-            }
+            // }
 
-            FrontendBookApi.getUnavailableDates($('#select-provider').val(), $(this).val(),
+            FrontendBookApi.getUnavailableDates('any-provider', $(this).val(),
                 $('#select-date').datepicker('getDate').toString('yyyy-MM-dd'));
             FrontendBook.updateConfirmFrame();
             _updateServiceDescription($('#select-service').val(), $('#service-description'));
@@ -677,7 +677,7 @@ window.FrontendBook = window.FrontendBook || {};
                     html += '[' + EALang.duration + ' ' + service.duration + ' ' + EALang.minutes + ']';
                 }
 
-                if (service.price != '' && service.price != null) {
+                if (service.price != '' && service.price != null && service.price > 0.0) {
                     html += '[' + EALang.price + ' ' + service.price + ' ' + service.currency + ']';
                 }
 
