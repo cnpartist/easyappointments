@@ -10,10 +10,7 @@
                     echo ' - ' . $release_title;
                 }
             ?></a> |
-        <?= lang('licensed_under') ?> GPLv3 |
-        <span id="select-language" class="label label-success">
-        	<?= ucfirst($this->config->item('language')) ?>
-        </span>
+        <?= lang('licensed_under') ?> GPLv3
         |
         <a href="<?= site_url('appointments') ?>">
             <?= lang('go_to_booking_page') ?>
